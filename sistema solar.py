@@ -28,16 +28,10 @@ ejecutar = True
 while ejecutar == True:
     pygame.draw.circle(VENTANA, (255, 255, 0), CENTRO, 80)
 
-    pygame.draw.circle(VENTANA, (252, 34, 0), (CENTRO[0]+200,CENTRO[1]), 5)
-    pygame.draw.circle(VENTANA, (197, 149, 0), (CENTRO[0]+300,CENTRO[1]), 8)
+    pygame.draw.circle(VENTANA, (252, 34, 0), (CENTRO[0]+200,CENTRO[1]), 3)
+    pygame.draw.circle(VENTANA, (197, 149, 0), (CENTRO[0]+300,CENTRO[1]), 6)
 
-
-    x, y = movimiento(angulo_tierra, x_tierra, y_tierra, 10)
-
-    x +=velocidad_angular
-    y +=velocidad_angular
-
-    pygame.draw.circle(VENTANA, (28, 156, 0), (x,y), 15)
+    pygame.draw.circle(VENTANA, (28, 156, 0), (CENTRO[0]+400,CENTRO[1]), 10)
 
 
 
