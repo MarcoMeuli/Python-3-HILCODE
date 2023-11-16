@@ -17,8 +17,7 @@ def movimiento(radio, centro_x, centro_y, angulo):
     return x, y
 
 
-
-x_mercurio = CENTRO[0]+50
+x_mercurio = CENTRO[0]
 y_mercurio = CENTRO[1]
 radio_mercurio = 50
 angulo_mercurio = 0
@@ -72,11 +71,7 @@ radio_luna = 15
 angulo_luna = 0
 velocidad_angular_luna = 0.01
 
-x_anillos = CENTRO[0]
-y_anillos = CENTRO[1]
-radio_anillos = 25
-angulo_anillos = 0
-velocidad_angular_anillos = 0.01
+
 
 ejecutar = True
 while ejecutar == True:
@@ -93,21 +88,6 @@ while ejecutar == True:
     pygame.draw.circle(VENTANA, (0, 100, 255), (x_neptuno,y_neptuno), 8)
 
     pygame.draw.circle(VENTANA, (160, 160, 160), (x_luna,y_luna), 2)
-
-
-    pygame.draw.circle(VENTANA, (255, 255, 255), (x_anillos,y_anillos), 3)
-    velocidad_angular_anillos = 0.01
-    pygame.draw.circle(VENTANA, (255, 255, 255), (x_anillos,y_anillos), 3)
-    velocidad_angular_anillos = 0.03
-    pygame.draw.circle(VENTANA, (255, 255, 255), (x_anillos,y_anillos), 3)
-    velocidad_angular_anillos = 0.05
-    pygame.draw.circle(VENTANA, (255, 255, 255), (x_anillos,y_anillos), 3)
-    velocidad_angular_anillos = 0.07
-    pygame.draw.circle(VENTANA, (255, 255, 255), (x_anillos,y_anillos), 3)
-    velocidad_angular_anillos = 0.09
-    pygame.draw.circle(VENTANA, (255, 255, 255), (x_anillos,y_anillos), 3)
-    velocidad_angular_anillos = 0.11
-    pygame.draw.circle(VENTANA, (255, 255, 255), (x_anillos,y_anillos), 3)
 
 
 
@@ -138,8 +118,6 @@ while ejecutar == True:
     angulo_luna += velocidad_angular_luna
     x_luna,y_luna = movimiento(radio_luna, x_tierra, y_tierra, angulo_luna)
 
-    angulo_anillos += velocidad_angular_anillos
-    x_anillos,y_anillos = movimiento(radio_anillos, x_saturno, y_saturno, angulo_anillos)
 
 
 
