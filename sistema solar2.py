@@ -1,5 +1,8 @@
+import random
+
 #defino el constructor de planetas
-def constructorPlanetas(nombre,tam, radio, v_angular, color, x=0, y=0, angulo=0):
+def constructorPlanetas(nombre,tam, radio, color, x=0, y=0, angulo=0, v_angular=None):
+    v_angular = setVelocidad(nombre=nombre)
     objeto = {
             "nombre": nombre,
             "tam": tam,
@@ -9,12 +12,28 @@ def constructorPlanetas(nombre,tam, radio, v_angular, color, x=0, y=0, angulo=0)
             "x": x,
             "y": y,
             "color": color,
-            "tipo": "planeta",
+            "tipo": "planeta"
             }
+
+
     return objeto
 
-#defino el set de velocidad
-def setVelocidad(objeto):
+
+
+
+
+
+
+def setNombre(objeto, nombre):
+    return objeto["nombre"] = nombre
+
+def getNombre(objeto):
+    return objeto
+
+
+
+def setVelocidad(objeto=None, nombre=None):
+    velocidad = None
     astros = {
             "sol": 0,
             "mercurio": 0.008,
@@ -26,18 +45,42 @@ def setVelocidad(objeto):
             "urano": 0.0004,
             "neptuno": 0.0002
             }
-
-    if objeto["tipo"] == "planeta":
-        objeto["v_angular"] = astros[objeto["nombre"]]
-
+    if nombre != None and nombre in astros and objeto == None:
+        velocidad = astros[nombre]
+    elif nombre not in astros and nombre == None:
+        velocidad = 0.3/random.randint(1,100)
+    elif "tipo" in objeto and "nombre" in objeto and objeto["tipo"] == "planeta":
+        velocidad = astros[objeto["nombre"]]
+    else:
+        print("Objeto invalido.")
     return velocidad
 
+
+def getVelocidad(objeto):
+    if v_angular in objeto and objeto["tipo"] == "planeta":
+        return objeto[v_angular]
+    else:
+        return None
+
+
+
+
+
+
+
+
+
+
+
 #creo los planetas:
-mercurio = constructorPlanetas(nombre="mercurio", tam=3, radio=50, v_angular=0.008, color=(162,162,162))
-venus = constructorPlanetas(nombre="venus", tam=6, radio=100, v_angular=0.006, color=(228,163,98))
-tierra = constructorPlanetas(nombre="tierra", tam=10, radio=150, v_angular=0.004, color=(28,156,0))
-marte = constructorPlanetas(nombre="marte", tam=12, radio=200, v_angular=0.002, color=(252,34,0))
-jupiter = constructorPlanetas(nombre="jupiter", tam=23, radio=250, v_angular=0.0008, color=(131,48,21))
-saturno = constructorPlanetas(nombre="saturno", tam=18, radio=300, v_angular=0.0006, color=(252,200,0))
-urano = constructorPlanetas(nombre="urano", tam=15, radio=350, v_angular=0.0004, color=(107,217,255))
-neptuno = constructorPlanetas(nombre="neptuno", tam=8, radio=400, v_angular=0.0002, color=(0,100,255))
+mercurio = constructorPlanetas(nombre="mercurio", tam=3, radio=50, color=(162,162,162))
+venus = constructorPlanetas(nombre="venus", tam=6, radio=100, color=(228,163,98))
+tierra = constructorPlanetas(nombre="tierra", tam=10, radio=150, color=(28,156,0))
+marte = constructorPlanetas(nombre="marte", tam=12, radio=200, color=(252,34,0))
+jupiter = constructorPlanetas(nombre="jupiter", tam=23, radio=250, color=(131,48,21))
+saturno = constructorPlanetas(nombre="saturno", tam=18, radio=300, color=(252,200,0))
+urano = constructorPlanetas(nombre="urano", tam=15, radio=350, color=(107,217,255))
+neptuno = constructorPlanetas(nombre="neptuno", tam=8, radio=400, color=(0,100,255))
+
+
+print(saturno)
