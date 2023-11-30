@@ -67,21 +67,6 @@ def getRadio(objeto):
 
 
 
-def setAngulo(objeto, angulo):
-    if "angulo" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
-        objeto["angulo"] = angulo
-    elif angulo <= 0:
-        objeto["angulo"] = angulo
-    else:
-        print("Objeto invalido.")
-    return objeto
-
-def getAngulo(objeto):
-    return objeto["angulo"]
-
-
-
-
 def setVelocidad(objeto=None, nombre=None):
     velocidad = None
     astros = {
@@ -140,6 +125,21 @@ def setY(objeto, y):
 
 def getY(objeto):
     return objeto["y"]
+
+
+
+
+def setAngulo(objeto, angulo):
+    if "angulo" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        objeto["angulo"] = angulo
+    elif angulo <= 0:
+        objeto["angulo"] = angulo
+    else:
+        print("Objeto invalido.")
+    return objeto
+
+def getAngulo(objeto):
+    return objeto["angulo"]
 #########
 #########
 
