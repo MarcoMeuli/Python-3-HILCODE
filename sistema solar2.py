@@ -22,14 +22,18 @@ def constructorPlanetas(nombre,tam, radio, color, x=0, y=0, angulo=0, v_angular=
 #########
 #########
 def setNombre(objeto, nombre):
-    if "nombre" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
-        objeto["nombre"] = nombre
-        return  objeto
-    elif type(nombre) == str:
-        objeto["nombre"] = nombre
-        return  objeto
-    else:
+    if not("nombre" in objeto):
+        print("ERROR: El objeto no tiene nombre.")
         return None
+    elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
+        print("ERROR: El objeto no es de tipo planeta.")
+        return None
+    elif not(type(nombre) == str):
+        print("ERROR: El nombre nuevo no es de tipo string(texto).")
+        return None
+    else:
+        objeto["nombre"] = nombre
+        return objeto
 
 def getNombre(objeto):
     return objeto["nombre"]
@@ -38,13 +42,18 @@ def getNombre(objeto):
 
 
 def setTam(objeto, tam):
-    if "tam" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
-        objeto["tam"] = tam
-    elif tam <= 0:
-        objeto["tam"] = tam
+    if not("tam" in objeto):
+        print("ERROR: El objeto no tiene tamaño.")
+        return None
+    elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
+        print("ERROR: El objeto no es de tipo planeta.")
+        return None
+    elif not(tam >= 0):
+        print("ERROR: El tamaño nuevo tiene que ser mayor que 0.")
+        return None
     else:
-        print("Objeto invalido.")
-    return objeto
+        objeto["tam"] = tam
+        return objeto
 
 def getTam(objeto):
     return objeto["tam"]
@@ -53,16 +62,38 @@ def getTam(objeto):
 
 
 def setRadio(objeto, radio):
-    if "radio" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
-        objeto["radio"] = radio
-    elif tam <= 0:
-        objeto["radio"] = radio
+    if not("radio" in objeto):
+        print("ERROR: El objeto no tiene radio.")
+        return None
+    elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
+        print("ERROR: El objeto no es de tipo planeta.")
+        return None
+    elif not(radio >= 0):
+        print("ERROR: El radio nuevo tiene que ser mayor que 0.")
+        return None
     else:
-        print("Objeto invalido.")
-    return objeto
+        objeto["radio"] = radio
+        return objeto
 
 def getRadio(objeto):
     return objeto["radio"]
+
+
+
+
+def setAngulo(objeto, angulo):
+    if not("angulo" in objeto):
+        print("ERROR: El objeto no tiene ángulo.")
+        return None
+    elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
+        print("ERROR: El objeto no es de tipo planeta.")
+        return None
+    else:
+        objeto["angulo"] = angulo
+        return angulo
+
+def getAngulo(objeto):
+    return objeto["angulo"]
 
 
 
@@ -87,28 +118,33 @@ def setVelocidad(objeto=None, nombre=None):
         velocidad = 0.3/random.randint(1,100)
         return velocidad
     elif "tipo" in objeto and "nombre" in objeto and objeto["tipo"] == "planeta":
-        objeto["v_angular"] = nueva_velocidad
+        objeto["v_angular"] = velocidad
         return velocidad
     else:
-        print("Objeto invalido.")
+        print("ERROR: Objeto invalido.")
     return objeto
 
 def getVelocidad(objeto):
     if "v_angular" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
         return objeto["v_angular"]
     else:
-        print("Objeto invalido.")
-    return objeto
+        print("ERROR: Objeto invalido.")
 
 
 
 
 def setX(objeto, x):
-    if "x" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
-        objeto["x"] = x
+    if not("x" in objeto):
+        print("ERROR: El objeto no tiene x.")
+        return None
+    elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
+        print("ERROR: El objeto no es de tipo planeta.")
+        return None
+    elif not(type(x) == int):
+        print("ERROR: El x nuevo no es de tipo entero(digitos sin decimales).")
     else:
-        print("Objeto invalido.")
-    return objeto
+        objeto["x"] = x
+        return x
 
 def getX(objeto):
     return objeto["x"]
@@ -117,29 +153,58 @@ def getX(objeto):
 
 
 def setY(objeto, y):
-    if "y" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
-        objeto["y"] = y
+    if not("y" in objeto):
+        print("ERROR: El objeto no tiene y.")
+        return None
+    elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
+        print("ERROR: El objeto no es de tipo planeta.")
+        return None
+    elif not(type(y) == int):
+        print("ERROR: El y nuevo no es de tipo entero(digitos sin decimales).")
     else:
-        print("Objeto invalido.")
-    return objeto
+        objeto["y"] = y
+        return y
 
 def getY(objeto):
     return objeto["y"]
 
 
 
-
-def setAngulo(objeto, angulo):
-    if "angulo" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
-        objeto["angulo"] = angulo
-    elif angulo <= 0:
-        objeto["angulo"] = angulo
+#
+###
+#
+#
+#
+#
+###!!!!
+###TIENE QUE SER: mayor o = a 0 y menor o = a 255
+###!!!!
+#
+#mayor 0, menor 255 & tipo int
+#
+#
+###
+#color = f"({colorR},{colorG},{colorB})"
+def setColor(objeto,colorR, colorG, colorB):
+    if not("color" in objeto):
+        print("ERROR: El objeto no tiene color.")
+        return None
+    elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
+        print("ERROR: El objeto no es de tipo planeta.")
+        return None
+    elif not(type(colorR) == int and type(colorG) == int and type(colorB) == int):
+        print("ERROR: Los colores nuevos no son de tipo entero(digitos sin decimales).")
+        return None
+    elif not(colorR >= 0 and colorR <= 255 and colorG >= 0 and colorG <= 255 and colorB >= 0 and colorB <= 255):
+        print("ERROR: Los colores nuevos no estan entre 0 y 255.")
+        return None
     else:
-        print("Objeto invalido.")
-    return objeto
+        objeto["color"] = (colorR, colorG, colorB)
+        return (colorR, colorG, colorB)
 
-def getAngulo(objeto):
-    return objeto["angulo"]
+def getColor(objeto):
+    return objeto["color"]
+
 #########
 #########
 
@@ -158,7 +223,7 @@ jupiter = constructorPlanetas(nombre="jupiter", tam=23, radio=250, color=(131,48
 saturno = constructorPlanetas(nombre="saturno", tam=18, radio=300, color=(252,200,0))
 urano = constructorPlanetas(nombre="urano", tam=15, radio=350, color=(107,217,255))
 neptuno = constructorPlanetas(nombre="neptuno", tam=8, radio=400, color=(0,100,255))
-_PC_ = {"RAM":8, "pantalla":"4K"}
+PC_test = {"RAM":8, "pantalla":"4K"}
 
 print(getTam(objeto=mercurio))
 
