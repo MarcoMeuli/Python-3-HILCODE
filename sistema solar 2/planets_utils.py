@@ -160,8 +160,7 @@ def getColor(objeto):
     return objeto["color"]
 
 
-
-
+'''
 #creo los planetas:
 mercurio = constructorPlanetas(nombre="mercurio", tam=3, radio=50, color=(162,162,162))
 venus = constructorPlanetas(nombre="venus", tam=6, radio=100, color=(228,163,98))
@@ -171,3 +170,4 @@ jupiter = constructorPlanetas(nombre="jupiter", tam=23, radio=250, color=(131,48
 saturno = constructorPlanetas(nombre="saturno", tam=18, radio=300, color=(252,200,0))
 urano = constructorPlanetas(nombre="urano", tam=15, radio=350, color=(107,217,255))
 neptuno = constructorPlanetas(nombre="neptuno", tam=8, radio=400, color=(0,100,255))
+'''
