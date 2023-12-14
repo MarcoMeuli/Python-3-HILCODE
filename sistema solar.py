@@ -17,7 +17,7 @@ def movimiento(radio, centro_x, centro_y, angulo):
     return x, y
 
 
-x_mercurio = CENTRO[0]
+x_mercurio = CENTRO[0]+50
 y_mercurio = CENTRO[1]
 radio_mercurio = 50
 angulo_mercurio = 0
