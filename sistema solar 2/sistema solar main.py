@@ -26,18 +26,23 @@ saturno = planets_utils.constructorPlanetas(nombre="saturno", tam=18, radio=300,
 urano = planets_utils.constructorPlanetas(nombre="urano", tam=15, radio=350, color=(107,217,255))
 neptuno = planets_utils.constructorPlanetas(nombre="neptuno", tam=8, radio=400, color=(0,100,255))
 
+planetas = [sol, mercurio, venus, tierra, marte, jupiter, saturno, urano, neptuno]
 
-pygame.draw.circle(VENTANA,
-planets_utils.getColor(sol),
-(planets_utils.getX(sol),
-planets_utils.getY(sol)),
-planets_utils.getTam(sol))
+for i in range(len(planetas)):
+    planets_utils.setX(planetas[i], CENTRO[0] + planets_utils.getRadio(planetas[i]))
+    planets_utils.setY(planetas[i], CENTRO[1] + planets_utils.getRadio(planetas[i]))
 
+ejecutar = True
+while ejecutar == True:
+    for i in range(len(planetas)):
+        pygame.draw.circle(VENTANA,
+        planets_utils.getColor(planetas[i]),
+        (planets_utils.getX(planetas[i]),
+        planets_utils.getY(planetas[i])),
+        planets_utils.getTam(planetas[i]))
 
-pygame.draw.circle(VENTANA,
-planets_utils.getColor(mercurio),
-(planets_utils.getX(mercurio),
-planets_utils.getY(mercurio)),
-planets_utils.getTam(mercurio))
+        pygame.display.update()
 
-pygame.display.update()
+    for eventos in pygame.event.get():
+        if eventos.type == pygame.QUIT:
+            ejecutar = False
