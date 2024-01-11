@@ -29,20 +29,30 @@ neptuno = planets_utils.constructorPlanetas(nombre="neptuno", tam=8, radio=400, 
 planetas = [sol, mercurio, venus, tierra, marte, jupiter, saturno, urano, neptuno]
 
 for i in range(len(planetas)):
-    planets_utils.setX(planetas[i], CENTRO[0] + planets_utils.getRadio(planetas[i]))
-    planets_utils.setY(planetas[i], CENTRO[1] + planets_utils.getRadio(planetas[i]))
+    planetas[i] = planets_utils.setX(planetas[i], CENTRO[0] + planets_utils.getRadio(planetas[i]))
+    planetas[i] = planets_utils.setY(planetas[i], CENTRO[1])
 
 ejecutar = True
 while ejecutar == True:
+
+
+
     for i in range(len(planetas)):
         pygame.draw.circle(VENTANA,
-        planets_utils.getColor(planetas[i]),
-        (planets_utils.getX(planetas[i]),
-        planets_utils.getY(planetas[i])),
-        planets_utils.getTam(planetas[i]))
+            planets_utils.getColor(planetas[i]),
+            (planets_utils.getX(planetas[i]),
+            planets_utils.getY(planetas[i])),
+            planets_utils.getTam(planetas[i]))
 
-        pygame.display.update()
+        x, y = movimiento(radio = planets_utils.getRadio(planetas[i]),
+            centro_x = CENTRO[0],
+            centro_y = CENTRO[1],
+            angulo = planets_utils.getAngulo(planetas[i]))
+
+
 
     for eventos in pygame.event.get():
         if eventos.type == pygame.QUIT:
             ejecutar = False
+
+    pygame.display.update()
