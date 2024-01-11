@@ -78,7 +78,7 @@ def setAngulo(objeto, angulo):
         print(f"ERROR: El radio nuevo no es de tipo int, es {type(tam)}.")
     else:
         objeto["angulo"] = angulo
-    return angulo
+    return objeto
 
 def getAngulo(objeto):
     return objeto["angulo"]
@@ -119,10 +119,11 @@ def setX(objeto, x):
         print("ERROR: El objeto no tiene x.")
     elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
         print("ERROR: El objeto no es de tipo planeta.")
-    elif not(type(x) == int):
+    elif not(type(x) == int or type(x) == float):
         print(f"ERROR: El x nuevo no es de tipo int, es {type(x)}.")
     else:
         objeto["x"] = x
+    return objeto
 
 def getX(objeto):
     return objeto["x"]
@@ -133,11 +134,11 @@ def setY(objeto, y):
         print("ERROR: El objeto no tiene y.")
     elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
         print("ERROR: El objeto no es de tipo planeta.")
-    elif not(type(y) == int):
-        print(f"ERROR: El y nuevo no es de tipo int, es {type(x)}.")
+    elif not(type(y) == int or type(y) == float):
+        print(f"ERROR: El y nuevo no es de tipo int, es {type(y)}.")
     else:
         objeto["y"] = y
-    return y
+    return objeto
 
 def getY(objeto):
     return objeto["y"]
