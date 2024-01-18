@@ -74,8 +74,8 @@ def setAngulo(objeto, angulo):
         print("ERROR: El objeto no tiene ángulo.")
     elif not("tipo" in objeto and objeto["tipo"] == "planeta"):
         print("ERROR: El objeto no es de tipo planeta.")
-    elif not(type(angulo) == int):
-        print(f"ERROR: El radio nuevo no es de tipo int, es {type(tam)}.")
+    elif not(type(angulo) == int or type(angulo) == float):
+        print(f"ERROR: El radio nuevo no es de tipo int, es {type(angulo)}.")
     else:
         objeto["angulo"] = angulo
     return objeto
@@ -95,12 +95,16 @@ def setVelocidad(objeto=None, nombre=None):
             "jupiter": 0.0008,
             "saturno": 0.0006,
             "urano": 0.0004,
-            "neptuno": 0.0002
+            "neptuno": 0.0002,
+            "luna": 0.01,
+
             }
     if nombre != None and nombre in astros and objeto == None:
         velocidad = astros[nombre]
-    elif nombre not in astros and nombre == None:
+        return velocidad
+    elif nombre not in astros and objeto == None:
         velocidad = 0.3/random.randint(1,100)
+        return velocidad
     elif "tipo" in objeto and "nombre" in objeto and objeto["tipo"] == "planeta":
         objeto["v_angular"] = velocidad
     else:
