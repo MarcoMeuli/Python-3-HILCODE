@@ -1,5 +1,7 @@
 import random
 
+PROPORCION = 10
+
 #defino el constructor de planetas
 def constructorPlanetas(nombre,tam, radio, color, x=0, y=0, angulo=0, v_angular=None):
     v_angular = setVelocidad(nombre=nombre)
@@ -18,8 +20,12 @@ def constructorPlanetas(nombre,tam, radio, color, x=0, y=0, angulo=0, v_angular=
 
 
 
+'''
+ creo las funciones "get" y "set" de todas las claves
+\||||||||||||||||||||||||||||||||||||||||||||||||||||/
+ VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+'''
 
-#creo las funciones "get" y "set" de todas las claves
 def setNombre(objeto, nombre):
     if not("nombre" in objeto):
         print("ERROR: El objeto no tiene nombre.")
@@ -96,14 +102,14 @@ def setVelocidad(objeto=None, nombre=None):
             "saturno": 0.0006,
             "urano": 0.0004,
             "neptuno": 0.0002,
-            "luna": 0.01,
-
+            "luna": 0.02,
+            "anillos": 0.8/random.randint(50,500)
             }
     if nombre != None and nombre in astros and objeto == None:
-        velocidad = astros[nombre]
+        velocidad = astros[nombre]*PROPORCION
         return velocidad
     elif nombre not in astros and objeto == None:
-        velocidad = 0.3/random.randint(1,100)
+        velocidad = 0.2/random.randint(400,500)*PROPORCION
         return velocidad
     elif "tipo" in objeto and "nombre" in objeto and objeto["tipo"] == "planeta":
         objeto["v_angular"] = velocidad
