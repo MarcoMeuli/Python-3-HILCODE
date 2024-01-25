@@ -3,8 +3,8 @@ import pygame
 import math
 import random
 
-ANCHO = 1080
-ALTO = 720
+ANCHO = 1600
+ALTO = 900
 CENTRO = (ANCHO/2, ALTO/2)
 NOMBRE = "sistema solar"
 ejecutar = True
@@ -86,17 +86,17 @@ while ejecutar == True:
     for eventos in pygame.event.get():
         if eventos.type == pygame.MOUSEBUTTONDOWN and eventos.button == 4:
             for i in range(len(planetas)):
-                planetas[i]["tam"]+=planetas[i]["tam"]/5
-                planetas[i]["radio"]+=planetas[i]["radio"]/5
-
-
+                planetas[i]["tam"]+=planetas[i]["tam"]/10
+                planetas[i]["radio"]+=planetas[i]["radio"]/10
 
         if eventos.type == pygame.MOUSEBUTTONDOWN and eventos.button == 5:
             for i in range(len(planetas)):
-                planetas[i]["tam"]-=planetas[i]["tam"]/5
-                planetas[i]["radio"]-=planetas[i]["radio"]/5
+                planetas[i]["tam"]-=planetas[i]["tam"]/10
+                planetas[i]["radio"]-=planetas[i]["radio"]/10
 
-
+        if eventos.type == pygame.KEYDOWN:
+            if eventos.key == pygame.K_ESCAPE:
+                ejecutar = False
 
         if eventos.type == pygame.QUIT:
             ejecutar = False
