@@ -8,8 +8,8 @@ ALTO = 900
 CENTRO = (ANCHO/2, ALTO/2)
 NOMBRE = "sistema solar"
 ejecutar = True
-N_asteroides = 600
-N_anillos = 100
+N_asteroides = 2000
+N_anillos = 200
 
 
 VENTANA = pygame.display.set_mode((ANCHO, ALTO))
