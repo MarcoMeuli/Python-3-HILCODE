@@ -7,9 +7,10 @@ ANCHO = 1600
 ALTO = 900
 CENTRO = (ANCHO/2, ALTO/2)
 NOMBRE = "sistema solar"
-ejecutar = True
-N_asteroides = 2000
-N_anillos = 200
+N_ASTEROIDES= 1000
+N_ANILLOS= 100
+ejecutar= True
+
 
 
 VENTANA = pygame.display.set_mode((ANCHO, ALTO))
@@ -33,9 +34,9 @@ neptuno = planets_utils.constructorPlanetas(nombre="neptuno", tam=8, radio=400, 
 luna = planets_utils.constructorPlanetas(nombre="luna", tam=2, radio=20, color=(200,200,200))
 planetas = [sol, mercurio, venus, tierra, marte, jupiter, saturno, urano, neptuno, luna]
 
-for i in range(N_asteroides):
+for i in range(N_ASTEROIDES):
     planetas.append(planets_utils.constructorPlanetas(nombre="asteroides", tam=random.randint(1,3), radio=random.randint(150, 220), color=(255,255,255)))
-for i in range(N_anillos):
+for i in range(N_ANILLOS):
     planetas.append(planets_utils.constructorPlanetas(nombre="anillos", tam=random.randint(10,16)/10, radio=random.randint(23,28), color=(255,255,255)))
 
 for i in range(len(planetas)):

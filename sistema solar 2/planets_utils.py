@@ -1,6 +1,6 @@
 import random
 
-PROPORCION = 10
+PROPORCION = 1
 
 #defino el constructor de planetas
 def constructorPlanetas(nombre,tam, radio, color, x=0, y=0, angulo=0, v_angular=None):
