@@ -33,7 +33,7 @@ def posO(pos):
                 [   [50,250],
                     [150,250],
                     [250,250]   ]]
-
+    """
     resultado=posiciones[0][0] if pos == 1
     resultado=posiciones[0][1] elif pos == 2
     resultado=posiciones[0][2] elif pos == 3
@@ -43,7 +43,7 @@ def posO(pos):
     resultado=posiciones[2][0] elif pos == 7
     resultado=posiciones[2][1] elif pos == 8
     resultado=posiciones[2][2] elif pos == 9
-
+    """
     return resultado
 
 
