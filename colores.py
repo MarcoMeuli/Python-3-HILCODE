@@ -21,7 +21,6 @@ def getColor(color):
                 "CREMA": (255,225,179),
                 "RANDOM": (r,g,b)
                 }
-
     if color not in colores:
         print("Color no encontrado.")
         return None
