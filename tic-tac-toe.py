@@ -1,4 +1,3 @@
-# Escribe tu código aquí :-)
 import pygame
 from colores import *
 ANCHO = 300
@@ -80,20 +79,45 @@ def posiciones_x(posicion):
                     3: ([(200,0),(300,100)], [(200,100),(300,0)]),
                     4: ([(0,100),(100,200)], [(0,200),(100,100)]),
                     5: ([(100,100),(200,200)], [(100,200),(200,100)]),
-                    6: ([(200,100),(300,200)], [(200,200),(300,100)]),
                     7: ([(0,200),(100,300)], [(0,300),(100,200)]),
+                    6: ([(200,100),(300,200)], [(200,200),(300,100)]),
                     8: ([(100,200),(200,300)],[(100,300),(200,200)]),
                     9: ([(200,200),(300,300)],[(200,300),(300,200)])    }
+
+
 
     r1 = posiciones[posicion][0]
     r2 = posiciones[posicion][1]
     return r1, r2
 
+def click(mouse_pos):
+    if (mouse_pos[0] > 0 and mouse_pos[0] < 100) and (mouse_pos[1] > 0 and mouse_pos[1] < 100): return 1
+    elif (mouse_pos[0] > 100 and mouse_pos[0] < 200) and (mouse_pos[1] > 0 and mouse_pos[1] < 100): return 2
+    elif (mouse_pos[0] > 200 and mouse_pos[0] < 300) and (mouse_pos[1] > 0 and mouse_pos[1] < 100): return 3
+    elif (mouse_pos[0] > 0 and mouse_pos[0] < 100) and (mouse_pos[1] > 100 and mouse_pos[1] < 200): return 4
+    elif (mouse_pos[0] > 100 and mouse_pos[0] < 200) and (mouse_pos[1] > 100 and mouse_pos[1] < 200): return 5
+    elif (mouse_pos[0] > 200 and mouse_pos[0] < 300) and (mouse_pos[1] > 100 and mouse_pos[1] < 200): return 6
+    elif (mouse_pos[0] > 0 and mouse_pos[0] < 100) and (mouse_pos[1] > 200 and mouse_pos[1] < 300): return 7
+    elif (mouse_pos[0] > 100 and mouse_pos[0] < 200) and (mouse_pos[1] > 200 and mouse_pos[1] < 300): return 8
+    elif (mouse_pos[0] > 200 and mouse_pos[0] < 300) and (mouse_pos[1] > 200 and mouse_pos[1] < 300): return 9
+    else: return None
+
+
+
 dibujar_tabla()
-for i in range(1,10):
-    r1, r2 = posiciones_x(i)
-    dibujar_x(r1, r2)
-for i in range(1,10):
-    centro = posiciones_o(i)
-    dibujar_o(centro)
-pygame.display.update()
+pos=None
+run = True
+while run:
+
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            run = False
+        elif evento.type == pygame.MOUSEBUTTONDOWN:
+            pos = click(evento.pos)
+            dibujar_o(posiciones_o(posicion=pos))
+
+    pygame.display.update()
+
+pygame.quit()
+
+
