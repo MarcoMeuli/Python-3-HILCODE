@@ -1,5 +1,6 @@
 import pygame
 from colores import *
+import random
 ANCHO = 300
 ALTO = 400
 ANCHO_RAYA = 100
@@ -103,18 +104,64 @@ def click(mouse_pos):
     else: return None
 
 
+def turno():
+    ran = random.randint(0,1)
+    if ran == 0: return "x"
+    else: return "o"
+
+
+def crearCasillasUsadas():
+    tabla = list()
+    num = 1
+
+    for i in range(3):
+        fila = list()
+
+        for i in range(3):
+            fila.append(num)
+            num += 1
+        tabla.append(fila)
+
+    return tabla
+
+
+def cambiar_posiciones(casillasUsadas, posicion):
+
+    for i in range(len(casillasUsadas[0])):
+        for j in range(len(casillasUsadas[0][i])):
+            if casillasUsadas[0][i][j] == posicion and tabla[i][j] == " ":
+                # COSAS #
+                tabla[i][j] = jugada[0]
+                break
 
 dibujar_tabla()
-pos=None
+turno = turno()
+casillasUsadas = crearCasillasUsadas()
 run = True
 while run:
 
+    print(casillasUsadas)
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             run = False
+
+
         elif evento.type == pygame.MOUSEBUTTONDOWN:
-            pos = click(evento.pos)
-            dibujar_o(posiciones_o(posicion=pos))
+            pos_click = click(evento.pos)
+
+            if turno == "x":
+                x, y = posiciones_x(posicion=pos_click)
+                dibujar_x(x,y)
+                turno = "o"
+
+
+            elif turno == "o":
+                pos = posiciones_o(posicion=pos_click)
+                dibujar_o(pos)
+                turno = "x"
+
+            casillasUsadas.append(pos)
+
 
     pygame.display.update()
 
