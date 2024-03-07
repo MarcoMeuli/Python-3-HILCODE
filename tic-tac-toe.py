@@ -85,8 +85,6 @@ def posiciones_x(posicion):
                     8: ([(100,200),(200,300)],[(100,300),(200,200)]),
                     9: ([(200,200),(300,300)],[(200,300),(300,200)])    }
 
-
-
     r1 = posiciones[posicion][0]
     r2 = posiciones[posicion][1]
     return r1, r2
@@ -104,13 +102,7 @@ def click(mouse_pos):
     else: return None
 
 
-def turno():
-    ran = random.randint(0,1)
-    if ran == 0: return "x"
-    else: return "o"
-
-
-def crearCasillasUsadas():
+def crearTabla():
     tabla = list()
     num = 1
 
@@ -121,47 +113,66 @@ def crearCasillasUsadas():
             fila.append(num)
             num += 1
         tabla.append(fila)
-
     return tabla
 
 
-def cambiar_posiciones(casillasUsadas, posicion):
-
-    for i in range(len(casillasUsadas[0])):
-        for j in range(len(casillasUsadas[0][i])):
-            if casillasUsadas[0][i][j] == posicion and tabla[i][j] == " ":
-                # COSAS #
+def cambiar_posiciones(tabla, posicion):
+    i = 0
+    encontrado = False
+    while i < len(tabla) and not encontrado:
+        j = 0
+        while j < len(tabla[i]):
+            if tabla[i][j] == posicion:
                 tabla[i][j] = jugada[0]
-                break
+                dibujos(posicion)
+                encontrado = True
+            elif type(tabla[i][j]) == int and tabla[i][j] > posicion:
+                encontrado = True
+            j+=1
+        i+=1
+
+
+def dibujos(posicion):
+    if jugada[0] == "X":
+        r1, r2 = posiciones_x(posicion)
+        dibujar_x(r1,r2)
+        jugada[0] = "O"
+
+    elif jugada[0] == "O":
+        centro = posiciones_o(posicion)
+        dibujar_o(centro)
+        jugada[0] = "X"
+
+jugada = ["X"]
+
+
+def ganador():
+    if tabla[0][0] == tabla[0][1] == tabla[0][2]: ganador = tabla[0]
+    elif tabla[1][0] == tabla[1][1] == tabla[1][2]: ganador = tabla[4]
+    elif tabla[2][0] == tabla[2][1] == tabla[2][2]: ganador = tabla[6]
+    elif tabla[0][0] == tabla[1][0] == tabla[2][0]: ganador = tabla[0]
+    elif tabla[0][1] == tabla[1][1] == tabla[2][1]: ganador = tabla[1]
+    elif tabla[0][2] == tabla[1][2] == tabla[2][2]: ganador = tabla[8]
+    elif tabla[0][0] == tabla[1][1] == tabla[2][2]: ganador = tabla[0]
+    elif tabla[0][2] == tabla[1][1] == tabla[2][0]: ganador = tabla[2]
+    print(ganador)
+    return ganador
 
 dibujar_tabla()
-turno = turno()
-casillasUsadas = crearCasillasUsadas()
+tabla = crearTabla()
+
 run = True
 while run:
 
-    print(casillasUsadas)
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             run = False
 
-
         elif evento.type == pygame.MOUSEBUTTONDOWN:
-            pos_click = click(evento.pos)
+            posicion = click(evento.pos)
+            cambiar_posiciones(tabla=tabla, posicion=posicion)
 
-            if turno == "x":
-                x, y = posiciones_x(posicion=pos_click)
-                dibujar_x(x,y)
-                turno = "o"
-
-
-            elif turno == "o":
-                pos = posiciones_o(posicion=pos_click)
-                dibujar_o(pos)
-                turno = "x"
-
-            casillasUsadas.append(pos)
-
+            print(tabla)
 
     pygame.display.update()
 
