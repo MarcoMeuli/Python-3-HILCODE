@@ -146,36 +146,49 @@ def dibujos(posicion):
 jugada = ["X"]
 
 
-def ganador():
-    if tabla[0][0] == tabla[0][1] == tabla[0][2]: ganador = tabla[0]
-    elif tabla[1][0] == tabla[1][1] == tabla[1][2]: ganador = tabla[4]
-    elif tabla[2][0] == tabla[2][1] == tabla[2][2]: ganador = tabla[6]
-    elif tabla[0][0] == tabla[1][0] == tabla[2][0]: ganador = tabla[0]
-    elif tabla[0][1] == tabla[1][1] == tabla[2][1]: ganador = tabla[1]
-    elif tabla[0][2] == tabla[1][2] == tabla[2][2]: ganador = tabla[8]
-    elif tabla[0][0] == tabla[1][1] == tabla[2][2]: ganador = tabla[0]
-    elif tabla[0][2] == tabla[1][1] == tabla[2][0]: ganador = tabla[2]
-    print(ganador)
+def victoria(tabla):
+    ganador = False
+    if tabla[0][0] == tabla[0][1] and tabla[0][0] == tabla[0][2]: ganador = tabla[0][0]
+    elif tabla[1][0] == tabla[1][1] and tabla[1][0] == tabla[1][2]: ganador = tabla[1][0]
+    elif tabla[2][0] == tabla[2][1] and tabla[2][0] == tabla[2][2]: ganador = tabla[2][0]
+    elif tabla[0][0] == tabla[1][0] and tabla [0][0] == tabla[2][0]: ganador = tabla[0][0]
+    elif tabla[0][1] == tabla[1][1] and tabla[0][1] == tabla[2][1]: ganador = tabla[0][1]
+    elif tabla[0][2] == tabla[1][2] and tabla[0][2] == tabla[2][2]: ganador = tabla[0][2]
+    elif tabla[0][0] == tabla[1][1] and tabla[0][0] == tabla[2][2]: ganador = tabla[0][0]
+    elif tabla[0][2] == tabla[1][1] and tabla[0][2] == tabla[2][0]: ganador = tabla[0][2]
+    else:
+        i=0
+        j=0
+        interrumpir = False
+        while i < len(tabla[i]) and not interrumpir:
+            j=0
+            while j < len(tabla[i]):
+                if type(tabla[i][j]) == int:
+                    interrumpir = True
+                elif i == 2 and j == 2:
+                    interrumpir = True
+                    ganador = "Empate"
+                j+=1
+            i+=1
+
     return ganador
 
 dibujar_tabla()
 tabla = crearTabla()
+ganador = victoria(tabla)
 
 run = True
 while run:
+    while not(ganador in ("X","O","Empate")) and run:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                run = False
 
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            run = False
-
-        elif evento.type == pygame.MOUSEBUTTONDOWN:
-            posicion = click(evento.pos)
-            cambiar_posiciones(tabla=tabla, posicion=posicion)
-
-            print(tabla)
-
-    pygame.display.update()
+            elif evento.type == pygame.MOUSEBUTTONDOWN:
+                posicion = click(evento.pos)
+                cambiar_posiciones(tabla=tabla, posicion=posicion)
+                ganador = victoria(tabla)
+                print("WINNER:", ganador)
+        pygame.display.update()
 
 pygame.quit()
-
-
