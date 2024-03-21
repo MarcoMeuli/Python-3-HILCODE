@@ -1,6 +1,8 @@
-import pygame
 from colores import *
-import random
+import pygame
+
+pygame.init()
+
 ANCHO = 300
 ALTO = 400
 ANCHO_RAYA = 100
@@ -9,7 +11,7 @@ NOMBRE = "Tic Tac Toe"
 VENTANA = pygame.display.set_mode((ANCHO,ALTO))
 pygame.display.set_caption(NOMBRE)
 
-VENTANA.fill((getColor("BLANCO")))
+VENTANA.fill((getColor("GRIS")))
 
 def dibujar_tabla():
     for i in range(1,4):
@@ -143,8 +145,26 @@ def dibujos(posicion):
         dibujar_o(centro)
         jugada[0] = "X"
 
-jugada = ["X"]
+def mostrar_mensaje(mensaje):
+    fuente = pygame.font.Font(None, 50)
+    texto = fuente.render(mensaje, True, getColor("NEGRO"))
+    rectangulo_texto = texto.get_rect(center=(ANCHO//2, ALTO -70))
+    VENTANA.blit(texto, rectangulo_texto)
 
+def mostrar_boton_reset():
+    x_centro = (ANCHO//2)-65
+    y_centro = ALTO-35
+    pygame.draw.rect(VENTANA, getColor("SALMON"), (x_centro, y_centro, 130, 30))
+    fuente = pygame.font.Font(None, 24)
+    texto = fuente.render('PLAY AGAIN', True, getColor("BLANCO"))
+    rectangulo_texto = texto.get_rect(center= (ANCHO//2, ALTO - 20))
+    VENTANA.blit(texto, rectangulo_texto)
+
+def click_boton(mouse_pos):
+    if (mouse_pos[0] > 85 and mouse_pos[0] < 215) and (mouse_pos[1] > 350 and mouse_pos[1] < 380):
+        return True
+    else:
+        return False
 
 def victoria(tabla):
     ganador = False
@@ -160,9 +180,9 @@ def victoria(tabla):
         i=0
         j=0
         interrumpir = False
-        while i < len(tabla[i]) and not interrumpir:
+        while i < 3 and not interrumpir:
             j=0
-            while j < len(tabla[i]):
+            while j < len(tabla[i]) and not interrumpir:
                 if type(tabla[i][j]) == int:
                     interrumpir = True
                 elif i == 2 and j == 2:
@@ -173,22 +193,34 @@ def victoria(tabla):
 
     return ganador
 
+jugada = ["X"]
 dibujar_tabla()
 tabla = crearTabla()
 ganador = victoria(tabla)
 
+
 run = True
 while run:
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            run = False
+
     while not(ganador in ("X","O","Empate")) and run:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 run = False
-
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 posicion = click(evento.pos)
                 cambiar_posiciones(tabla=tabla, posicion=posicion)
                 ganador = victoria(tabla)
-                print("WINNER:", ganador)
-        pygame.display.update()
+                print("WINNER:", ganador)# todelete
+
+            pygame.display.update()
+
+    mensaje = f"{ganador} wins!" if ganador != "Empate" else "Draw"
+    mostrar_mensaje(mensaje)
+    mostrar_boton_reset()
+    pygame.display.update()
+
 
 pygame.quit()
