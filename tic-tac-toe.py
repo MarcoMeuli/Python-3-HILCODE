@@ -92,15 +92,15 @@ def posiciones_x(posicion):
     return r1, r2
 
 def click(mouse_pos):
-    if (mouse_pos[0] > 0 and mouse_pos[0] < 100) and (mouse_pos[1] > 0 and mouse_pos[1] < 100): return 1
-    elif (mouse_pos[0] > 100 and mouse_pos[0] < 200) and (mouse_pos[1] > 0 and mouse_pos[1] < 100): return 2
-    elif (mouse_pos[0] > 200 and mouse_pos[0] < 300) and (mouse_pos[1] > 0 and mouse_pos[1] < 100): return 3
-    elif (mouse_pos[0] > 0 and mouse_pos[0] < 100) and (mouse_pos[1] > 100 and mouse_pos[1] < 200): return 4
-    elif (mouse_pos[0] > 100 and mouse_pos[0] < 200) and (mouse_pos[1] > 100 and mouse_pos[1] < 200): return 5
-    elif (mouse_pos[0] > 200 and mouse_pos[0] < 300) and (mouse_pos[1] > 100 and mouse_pos[1] < 200): return 6
-    elif (mouse_pos[0] > 0 and mouse_pos[0] < 100) and (mouse_pos[1] > 200 and mouse_pos[1] < 300): return 7
-    elif (mouse_pos[0] > 100 and mouse_pos[0] < 200) and (mouse_pos[1] > 200 and mouse_pos[1] < 300): return 8
-    elif (mouse_pos[0] > 200 and mouse_pos[0] < 300) and (mouse_pos[1] > 200 and mouse_pos[1] < 300): return 9
+    if (mouse_pos[0] >= 0 and mouse_pos[0] <= 100) and (mouse_pos[1] >= 0 and mouse_pos[1] <= 100): return 1
+    elif (mouse_pos[0] >= 100 and mouse_pos[0] <= 200) and (mouse_pos[1] >= 0 and mouse_pos[1] <= 100): return 2
+    elif (mouse_pos[0] >= 200 and mouse_pos[0] <= 300) and (mouse_pos[1] >= 0 and mouse_pos[1] <= 100): return 3
+    elif (mouse_pos[0] >= 0 and mouse_pos[0] <= 100) and (mouse_pos[1] >= 100 and mouse_pos[1] <= 200): return 4
+    elif (mouse_pos[0] >= 100 and mouse_pos[0] <= 200) and (mouse_pos[1] >= 100 and mouse_pos[1] <= 200): return 5
+    elif (mouse_pos[0] >= 200 and mouse_pos[0] <= 300) and (mouse_pos[1] >= 100 and mouse_pos[1] <= 200): return 6
+    elif (mouse_pos[0] >= 0 and mouse_pos[0] <= 100) and (mouse_pos[1] >= 200 and mouse_pos[1] <= 300): return 7
+    elif (mouse_pos[0] >= 100 and mouse_pos[0] <= 200) and (mouse_pos[1] >= 200 and mouse_pos[1] <= 300): return 8
+    elif (mouse_pos[0] >= 200 and mouse_pos[0] <= 300) and (mouse_pos[1] >= 200 and mouse_pos[1] <= 300): return 9
     else: return None
 
 
@@ -154,17 +154,32 @@ def mostrar_mensaje(mensaje):
 def mostrar_boton_reset():
     x_centro = (ANCHO//2)-65
     y_centro = ALTO-35
+    ancho_boton = 130
+    alto_boton = 30
     pygame.draw.rect(VENTANA, getColor("SALMON"), (x_centro, y_centro, 130, 30))
     fuente = pygame.font.Font(None, 24)
     texto = fuente.render('PLAY AGAIN', True, getColor("BLANCO"))
     rectangulo_texto = texto.get_rect(center= (ANCHO//2, ALTO - 20))
     VENTANA.blit(texto, rectangulo_texto)
+    return x_centro, y_centro, ancho_boton, alto_boton
 
-def click_boton(mouse_pos):
-    if (mouse_pos[0] > 85 and mouse_pos[0] < 215) and (mouse_pos[1] > 350 and mouse_pos[1] < 380):
-        return True
-    else:
-        return False
+def area_boton(ancho_boton, alto_boton, x_centro, y_centro, tabla):
+    min_x = x_centro - (ancho_boton//2)
+    max_x = x_centro + (ancho_boton//2)
+    min_y = y_centro - (alto_boton//2)
+    max_y = y_centro + (alto_boton//2)
+    print(f"Min_x: {min_x}")# delete
+    print(f"Max_x: {max_x}")# delete
+    print(f"Min_y: {min_y}")# delete
+    print(f"Max_y: {max_y}")# delete
+    return min_x, max_x, min_y, max_y, tabla
+
+def reiniciar(mouse_pos, min_x, max_x, min_y, max_y, tabla):
+    if (mouse_pos[0] >= min_x and mouse_pos[0] <= max_x) and (mouse_pos[1] >= min_y and mouse_pos[1] <= max_y):
+        VENTANA.fill(getColor("GRIS"))
+        tabla = dibujar_tabla()
+    return ganador, tabla
+
 
 def victoria(tabla):
     ganador = False
@@ -213,13 +228,20 @@ while run:
                 posicion = click(evento.pos)
                 cambiar_posiciones(tabla=tabla, posicion=posicion)
                 ganador = victoria(tabla)
-                print("WINNER:", ganador)# todelete
-
+                print("WINNER:", ganador)# delete
             pygame.display.update()
 
     mensaje = f"{ganador} wins!" if ganador != "Empate" else "Draw"
     mostrar_mensaje(mensaje)
-    mostrar_boton_reset()
+
+    x_centro, y_centro, ancho_boton, alto_boton = mostrar_boton_reset()
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            run = False
+        if evento.type == "MOUSEBUTTONDOWN":
+            min_x, max_x, min_y, max_y = area_boton(ancho_boton, alto_boton, x_centro, y_centro)
+            ganador, tabla = reiniciar(evento.pos, min_x, max_x, min_y, max_y, tabla)
+
     pygame.display.update()
 
 
