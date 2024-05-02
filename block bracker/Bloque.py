@@ -1,18 +1,27 @@
+# CLASE BLOQUE
+
 def constructor(color, ancho, alto, x, y, estado):
-    objeto = {"color": color,
-              "ancho": ancho,
-              "alto": alto,
-              "x": x,
-              "y": y,
-              "estado": estado,
-              "tipo": "bloque"}
+    objeto = dict()
+    objeto["tipo"] = "bloque"
+    setColor(objeto, color)
+    setAncho(objeto, ancho)
+    setAlto(objeto, alto)
+    setX(objeto, x)
+    setY(objeto, y)
+    setEstado(objeto, estado)
+
+
     return objeto
+
+
+def checkTipo(objeto):
+    return True if "tipo" in objeto and objeto["tipo"] == "bloque" else False
 
 
 
 
 def getColor(objeto):
-    if "tipo" in objeto and "color" in objeto and objeto["tipo"] == "bloque":
+    if checkTipo(objeto):
         return objeto["color"]
     elif "tipo" in objeto:
         print(f"Los objetos de tipo {objeto['tipo']}, no tienen color.")
@@ -31,20 +40,21 @@ def setColor(objeto, nuevoColor):
             return
 
 
-    if "tipo" in objeto and "color" in objeto and objeto["tipo"] == "bloque":
-        return objeto["color"]
-    elif "tipo" in objeto:
-        print(f"Los objetos de tipo {objeto['tipo']}, no tienen color.")
-    else:
-        print("El objeto pasado como parametro no posee tipo")
-    else:
+
+    if checkTipo(objeto):
         objeto["color"] = nuevoColor
-    return objeto
+    elif "tipo" in objeto:
+        print(f"El objeto de tipo {objeto['tipo']}, no tiene color.")
+    else:
+        print("El objeto pasado como parametro no posee color")
+
+
+
 
 
 
 def getAncho(objeto):
-    if "tipo" in objeto and "ancho" in objeto and objeto["tipo"] == "bloque":
+    if checkTipo(objeto):
         return objeto["ancho"]
     elif "tipo" in objeto:
         print(f"Los objetos de tipo {objeto['tipo']}, no tienen anchura.")
@@ -53,21 +63,22 @@ def getAncho(objeto):
     return None
 
 def setAncho(objeto, nuevoAncho):
-    if nuevoAncho != int:
+    if type(nuevoAncho) != int:
         print("ERROR: El ancho debe ser un entero.")
+        return
 
 
-    if "tipo" in objeto and "ancho" in objeto and objeto["tipo"] == "bloque":
-        return objeto["ancho"]
+    if checkTipo(objeto):
+        objeto["ancho"] = nuevoAncho
     elif "tipo" in objeto:
-        print(f"Los objetos de tipo {objeto['tipo']}, no tienen anchura.")
+        print(f"El objeto de tipo {objeto['tipo']}, no tiene anchura.")
     else:
-        print("El objeto pasado como parametro no posee tipo")
+        print("El objeto pasado como parametro no posee anchura")
 
 
 
 def getAlto(objeto):
-    if "tipo" in objeto and "alto" in objeto and objeto["tipo"] == "bloque":
+    if checkTipo(objeto):
         return objeto["alto"]
     elif "tipo" in objeto:
         print(f"Los objetos de tipo {objeto['tipo']}, no tienen altura.")
@@ -76,21 +87,22 @@ def getAlto(objeto):
     return None
 
 def setAlto(objeto, nuevoAlto):
-    if nuevoAncho != int:
+    if type(nuevoAlto) != int:
         print("ERROR: El alto debe ser un entero.")
+        return
 
 
-    if "tipo" in objeto and "alto" in objeto and objeto["tipo"] == "bloque":
-        return objeto["alto"]
+    if checkTipo(objeto):
+        objeto["x"] = nuevoAlto
     elif "tipo" in objeto:
-        print(f"Los objetos de tipo {objeto['tipo']}, no tienen altura.")
+        print(f"El objeto de tipo {objeto['tipo']}, no tiene estado.")
     else:
-        print("El objeto pasado como parametro no posee tipo")
+        print("El objeto pasado como parametro no posee altura")
 
 
 
 def getX(objeto):
-    if "tipo" in objeto and "x" in objeto and objeto["tipo"] == "bloque":
+    if checkTipo(objeto):
         return objeto["x"]
     elif "tipo" in objeto:
         print(f"Los objetos de tipo {objeto['tipo']}, no tienen x.")
@@ -99,25 +111,26 @@ def getX(objeto):
     return None
 
 def setX(objeto, nuevoX):
-    if nuevoX != int:
+    if type(nuevoX) != int:
         print("ERROR: La x debe ser un entero.")
         return
 
 
-    if "tipo" in objeto and "x" in objeto and objeto["tipo"] == "bloque":
-        return objeto["x"]
+    if checkTipo(objeto):
+        objeto["x"] = nuevoX
     elif "tipo" in objeto:
         print(f"Los objetos de tipo {objeto['tipo']}, no tienen x.")
     else:
-        print("El objeto pasado como parametro no posee tipo")
-    else:
-        objeto["x"] = nuevoColor
-    return objeto
+        print("El objeto pasado como parametro no posee x")
+
+
+
+
 
 
 
 def getY(objeto):
-    if "tipo" in objeto and "y" in objeto and objeto["tipo"] == "bloque":
+    if checkTipo(objeto):
         return objeto["y"]
     elif "tipo" in objeto:
         print(f"Los objetos de tipo {objeto['tipo']}, no tienen y.")
@@ -126,17 +139,39 @@ def getY(objeto):
     return None
 
 def setY(objeto, nuevoY):
-    if nuevoX != int:
+    if type(nuevoY) != int:
         print("ERROR: La y debe ser un entero.")
         return
 
 
-    if "tipo" in objeto and "y" in objeto and objeto["tipo"] == "bloque":
-        return objeto["y"]
+    if checkTipo(objeto):
+        objeto["y"] = nuevoY
     elif "tipo" in objeto:
         print(f"Los objetos de tipo {objeto['tipo']}, no tienen y.")
     else:
-        print("El objeto pasado como parametro no posee tipo")
+        print("El objeto pasado como parametro no posee y")
+
+
+
+def getEstado(objeto):
+    if checkTipo(objeto):
+        return objeto["estado"]
+    elif "tipo" in objeto:
+        print(f"Los objetos de tipo {objeto['tipo']}, no tienen estado.")
     else:
-        objeto["y"] = nuevoColor
-    return objeto
+        print("El objeto pasado como parametro no posee estado")
+    return None
+
+
+def setEstado(objeto, nuevoEstado):
+    if type(nuevoEstado) != int:
+        print("ERROR: El estado debe ser un entero.")
+        return
+
+
+    if checkTipo(objeto):
+        objeto["estado"] = nuevoEstado
+    elif "tipo" in objeto:
+        print(f"Los objetos de tipo {objeto['tipo']}, no tienen estado.")
+    else:
+        print("El objeto pasado como parametro no posee estado")
