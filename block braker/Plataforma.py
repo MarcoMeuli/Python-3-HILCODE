@@ -1,21 +1,23 @@
-# CLASE PELOTA
+# CLASE PLATAFORMA
 
-def constructor(color, x, y, velocidad, radio):
+def constructor(color, ancho, alto, x, y, velocidad):
     objeto = dict()
 
+    objeto["tipo"] = "platafoma"
     setColor(objeto, color)
     setAncho(objeto, ancho)
     setAlto(objeto, alto)
     setX(objeto, x)
     setY(objeto, y)
-    setEstado(objeto, estado)
-    objeto["tipo"] = "pelota"
+    setVelocidad(objeto, velocidad)
+
 
     return objeto
 
-
 def checkTipo(objeto):
-    return True if "tipo" in objeto and objeto["tipo"] == "pelota" else False
+    return True if "tipo" in objeto and objeto["tipo"] == "platafoma" else False
+
+
 
 
 
@@ -45,6 +47,56 @@ def setColor(objeto, nuevoColor):
         print(f"El objeto de tipo {objeto['tipo']}, no tiene color.")
     else:
         print("El objeto pasado como parametro no posee color")
+
+
+
+
+def getAncho(objeto):
+    if checkTipo(objeto):
+        return objeto["ancho"]
+    elif "tipo" in objeto:
+        print(f"Los objetos de tipo {objeto['tipo']}, no tienen anchura.")
+    else:
+        print("El objeto pasado como parametro no posee tipo")
+    return None
+
+def setAncho(objeto, nuevoAncho):
+    if type(nuevoAncho) != int:
+        print("ERROR: El ancho debe ser un entero.")
+        return
+
+
+    if checkTipo(objeto):
+        objeto["ancho"] = nuevoAncho
+    elif "tipo" in objeto:
+        print(f"El objeto de tipo {objeto['tipo']}, no tiene anchura.")
+    else:
+        print("El objeto pasado como parametro no posee anchura")
+
+
+
+
+def getAlto(objeto):
+    if checkTipo(objeto):
+        return objeto["alto"]
+    elif "tipo" in objeto:
+        print(f"Los objetos de tipo {objeto['tipo']}, no tienen altura.")
+    else:
+        print("El objeto pasado como parametro no posee tipo")
+    return None
+
+def setAlto(objeto, nuevoAlto):
+    if type(nuevoAlto) != int:
+        print("ERROR: El alto debe ser un entero.")
+        return
+
+
+    if checkTipo(objeto):
+        objeto["alto"] = nuevoAlto
+    elif "tipo" in objeto:
+        print(f"El objeto de tipo {objeto['tipo']}, no tiene altura.")
+    else:
+        print("El objeto pasado como parametro no posee altura")
 
 
 
@@ -116,23 +168,3 @@ def setVelocidad(objeto, nuevoVelocidad):
         print(f"Los objetos de tipo {objeto['tipo']}, no tienen velocidad.")
     else:
         print("El objeto pasado como parametro no posee velocidad")
-
-
-
-def getRadio(objeto):
-    if checkTipo(objeto):
-        return objeto["radio"]
-    elif "tipo" in objeto:
-        print(f"Los objetos de tipo {objeto['tipo']}, no tienen radio.")
-    else:
-        print("El objeto pasado como parametro no posee tipo")
-    return None
-
-def setVelocidad(objeto, nuevoRadio):
-
-    if checkTipo(objeto):
-        objeto["radio"] = nuevoRadio
-    elif "tipo" in objeto:
-        print(f"Los objetos de tipo {objeto['tipo']}, no tienen radio.")
-    else:
-        print("El objeto pasado como parametro no posee radio")

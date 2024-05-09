@@ -2,6 +2,7 @@
 
 def constructor(color, ancho, alto, x, y, estado):
     objeto = dict()
+
     objeto["tipo"] = "bloque"
     setColor(objeto, color)
     setAncho(objeto, ancho)
@@ -93,7 +94,7 @@ def setAlto(objeto, nuevoAlto):
 
 
     if checkTipo(objeto):
-        objeto["x"] = nuevoAlto
+        objeto["alto"] = nuevoAlto
     elif "tipo" in objeto:
         print(f"El objeto de tipo {objeto['tipo']}, no tiene estado.")
     else:
