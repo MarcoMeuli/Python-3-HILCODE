@@ -1,18 +1,14 @@
 # MAIN
 
-# importo las clases
 import Bloque
 import Pelota
 import Plataforma
-
-# importo herramientas
 import random
 import pygame
 from colores import *
-import Test
-#Test.main() #Descomentar para hacer pruebas
+from Mapas_utils import pos
+from Mapas import mapa1
 pygame.init()
-
 
 
 
@@ -21,14 +17,11 @@ pygame.display.set_caption("Block Breaker")
 VENTANA = pygame.display.set_mode((ANCHO, ALTO))
 
 plataforma = Plataforma.constructor(color=getColor("AZUL"), ancho=80, alto=20, x=400, y=570, velocidad=7)
-pelota = Pelota.constructor(color=getColor("ROJO"),x=400, y=300, velocidad=7,radio=20)
+pelota = Pelota.constructor(color=getColor("SALMON"), x=400, y=300, velocidad=7,radio=20)
 
 
 
-
-
-
-
+# Dibujo el fondo y la pelota
 VENTANA.fill(getColor("NEGRO"))
 pygame.draw.rect(
             VENTANA,
@@ -45,16 +38,36 @@ pygame.draw.circle(
             Pelota.getY(pelota)),
             Pelota.getRadio(pelota))
 
-bloques = []
-for i in range(10):
-    bloques.append(Bloque.constructor(color=getColor("RANDOM"), ancho=80, alto=20, x=random.randint(0, 700), y=50, estado=1))
-for i in range(10):
+
+
+bloques = list()
+for i in range(len(mapa1)):
+    for j in range(len(mapa1[i])):
+        if mapa1[i][j]:
+            bloque = Bloque.constructor(color = getColor("AMARILLO"),
+                                         ancho = 40,
+                                         alto = 20,
+                                         x = pos[i][j][0],
+                                         y = pos[i][j][1],
+                                         estado = 3)
+            bloques.append(bloque)
+
+for bloque in bloques:
     pygame.draw.rect(
-                VENTANA,
-                Bloque.getColor(bloques[i]),
-                (Bloque.getX(bloques[i]),
-                Bloque.getY(bloques[i]),
-                Bloque.getAncho(bloques[i]),
-                Bloque.getAlto(bloques[i])))
+            VENTANA,
+            Bloque.getColor(bloque),
+            (Bloque.getX(bloque),
+            Bloque.getY(bloque),
+            Bloque.getAncho(bloque),
+            Bloque.getAlto(bloque)))
+
+    pygame.draw.rect(
+            surface = VENTANA,
+            color = getColor("NEGRO"),
+            width = 1,
+            rect = (Bloque.getX(bloque),
+            Bloque.getY(bloque),
+            Bloque.getAncho(bloque),
+            Bloque.getAlto(bloque)))
 
 pygame.display.update()
