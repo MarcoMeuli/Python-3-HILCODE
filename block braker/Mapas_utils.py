@@ -24,7 +24,7 @@ def generar_map(ancho_bloque, ancho_pantalla, alto_bloque, num_filas):
 pos = generar_pos(ancho_bloque = 40,
                   ancho_pantalla = 800,
                   alto_bloque = 20,
-                  num_filas = 3)
+                  num_filas = 10)
 
 mapa = generar_map(ancho_bloque = 40,
                    ancho_pantalla = 800,

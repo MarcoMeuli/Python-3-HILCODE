@@ -7,6 +7,7 @@ def constructor(color, x, y, velocidad, radio):
     setColor(objeto, color)
     setX(objeto, x)
     setY(objeto, y)
+    setVelocidad(objeto, velocidad)
     setRadio(objeto, radio)
 
 
@@ -58,7 +59,7 @@ def getX(objeto):
     return None
 
 def setX(objeto, nuevoX):
-    if type(nuevoX) != int:
+    if not type(nuevoX) in (int, float):
         print("ERROR: La x debe ser un entero.")
         return
 
@@ -83,7 +84,7 @@ def getY(objeto):
     return None
 
 def setY(objeto, nuevoY):
-    if type(nuevoY) != int:
+    if not type(nuevoY) in (int, float):
         print("ERROR: La y debe ser un entero.")
         return
 
