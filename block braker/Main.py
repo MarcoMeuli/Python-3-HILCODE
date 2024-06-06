@@ -20,14 +20,34 @@ VENTANA = pygame.display.set_mode((ANCHO, ALTO))
 
 angulo = random.randint(0, 360)
 def movimientoPelota(angulo, vel):
-    i = (math.pi*angulo)/180
-    x = math.cos(i)*vel
-    y = math.sin(i)*vel
+    rad = (math.pi*angulo)/180
+    x = math.cos(rad)*vel
+    y = math.sin(rad)*vel
     return x, y
 
 
-plataforma = Plataforma.constructor(color=getColor("AZUL"), ancho=80, alto=20, x=400, y=570, velocidad=7)
-pelota = Pelota.constructor(color=getColor("SALMON"), x=400, y=300, velocidad=0.5,radio=20)
+def movimientoPlataforma(boton):
+    if boton[pygame.K_LEFT] or boton[pygame.K_a]:
+        nueva_x = Plataforma.getX(plataforma) - Plataforma.getVelocidad(plataforma)
+        if nueva_x >= 0:
+            Plataforma.setX(plataforma, nueva_x)
+    if boton[pygame.K_RIGHT] or boton[pygame.K_d]:
+        nueva_x = Plataforma.getX(plataforma) + Plataforma.getVelocidad(plataforma)
+        if nueva_x + Plataforma.getAncho(plataforma) <= ANCHO:
+            Plataforma.setX(plataforma, nueva_x)
+
+
+plataforma = Plataforma.constructor(color=getColor("AZUL"),
+                                    ancho=80,
+                                    alto=20,
+                                    x=400,
+                                    y=570,
+                                    velocidad=10)
+pelota = Pelota.constructor(color=getColor("SALMON"),
+                            x=400,
+                            y=300,
+                            velocidad=2.5,
+                            radio=15)
 
 bloques = list()
 for i in range(len(mapa1)):
@@ -43,24 +63,19 @@ for i in range(len(mapa1)):
 
 
 
-run=True
-while run == True:
+run = True
+while run:
     VENTANA.fill(getColor("NEGRO"))
 
-                        ##-##
-    pygame.draw.rect(
-            VENTANA,
+                        ##PRINTS##
+    pygame.draw.rect(VENTANA,
             Plataforma.getColor(plataforma),
             (Plataforma.getX(plataforma),
             Plataforma.getY(plataforma),
             Plataforma.getAncho(plataforma),
             Plataforma.getAlto(plataforma)))
-                        ##-##
 
 
-
-
-                        ##-##
     for bloque in bloques:
         pygame.draw.rect(
                 VENTANA,
@@ -77,8 +92,11 @@ while run == True:
                 Bloque.getY(bloque),
                 Bloque.getAncho(bloque),
                 Bloque.getAlto(bloque)))
-                        ##-##
+                        ##PRINTS##
 
+
+    if Pelota.getY(pelota) >= 200:
+        Pelota.setX(pelota, movimientoPelota)
 
 
 
@@ -89,10 +107,16 @@ while run == True:
 
     pygame.draw.circle(VENTANA, (215, 97, 49), (Pelota.getX(pelota), Pelota.getY(pelota)), Pelota.getRadio(pelota))
 
-    pygame.display.update()
+    boton = pygame.key.get_pressed()
+    movimientoPlataforma(boton)
 
+
+    pygame.display.update()
     for eventos in pygame.event.get():
         if eventos.type == pygame.QUIT:
-            ejecutar = False
+            run = False
+            pygame.quit()
+
+
 
 
