@@ -94,13 +94,6 @@ while run:
                 Bloque.getAlto(bloque)))
                         ##PRINTS##
 
-
-    if Pelota.getY(pelota) >= 200:
-        Pelota.setX(pelota, movimientoPelota)
-
-
-
-
     x, y = movimientoPelota(angulo, Pelota.getVelocidad(pelota))
     Pelota.setX(pelota, x + Pelota.getX(pelota))
     Pelota.setY(pelota, y + Pelota.getY(pelota))
@@ -116,7 +109,3 @@ while run:
         if eventos.type == pygame.QUIT:
             run = False
             pygame.quit()
-
-
-
-
