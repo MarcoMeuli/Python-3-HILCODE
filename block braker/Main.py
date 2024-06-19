@@ -48,13 +48,13 @@ def mostrarMensaje(mensaje):
 def colisiones(pelota_objeto, pelota, bloques_objetos, pos, ancho_bloque, alto_bloque):
     for i in range(len(pos)):
         for j in range(len(pos[i])):
-        horizontal = [pos[i][0][0], pos[i][0][0]+ancho_bloque]
-        vertical = [pos[i][0][1], pos[i][0][1]+alto_bloque]
+            horizontal = [pos[i][0][0], pos[i][0][0]+ancho_bloque]
+            vertical = [pos[i][0][1], pos[i][0][1]+alto_bloque]
 
 
         for x in range(horizontal[0], horizontal[1]):
             for y in range(horizontal[0], horizontal[1]):
-                if pelota_objeto.collidepoint(x, y)
+                if pelota_objeto.collidepoint(x, y):
                     Pelota.setVelocidad(pelota, 0)
 
 
@@ -119,7 +119,7 @@ while run:
                 Bloque.getAncho(bloque),
                 Bloque.getAlto(bloque)))
 
-        colison(centro_bloque=(Bloque.getX(bloque), Bloque.getY(bloque)))
+        colisiones(centro_bloque=(Bloque.getX(bloque), Bloque.getY(bloque)))
 
 
 
