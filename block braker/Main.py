@@ -16,8 +16,11 @@ pygame.init()
 ANCHO, ALTO = 800, 600
 pygame.display.set_caption("Block Breaker")
 VENTANA = pygame.display.set_mode((ANCHO, ALTO))
-angulo = -90
 
+angulo = -90
+ancho_bloque = 40
+alto_bloque = 20
+num_filas = 10
 
 def movimientoPelota(angulo, vel):
     rad = (math.pi*angulo)/180
@@ -67,37 +70,34 @@ plataforma = Plataforma.constructor(color=getColor("AZUL"),
 pelota = Pelota.constructor(color=getColor("SALMON"),
                             x=ANCHO//2,
                             y=500,
-                            velocidad=25,
+                            velocidad=10,
                             radio=20)
 
 
-pos = generar_pos(ancho_bloque = 40,
+pos = generar_pos(ancho_bloque = ancho_bloque,
                   ancho_pantalla = 800,
-                  alto_bloque = 20,
-                  num_filas = 10)
+                  alto_bloque = alto_bloque,
+                  num_filas = num_filas)
 
-mapa = generar_map(ancho_bloque = 40,
+mapa = generar_map(ancho_bloque = ancho_bloque,
                    ancho_pantalla = 800,
-                   alto_bloque = 20,
-                   num_filas = 10)
+                   alto_bloque = alto_bloque,
+                   num_filas = num_filas)
 
-ancho_bloque = 40
-alto_bloque = 20
-num_filas = 10
 
 bloques = list()
 bloques_objetos = list()
 borde_objetos = list()
 for i in range(len(mapa1)):
-        for j in range(len(mapa1[i])):
-            if mapa1[i][j]:
-                bloque = Bloque.constructor(color = getColor("AMARILLO"),
-                                            ancho = 40,
-                                            alto = 20,
-                                            x = pos[i][j][0],
-                                            y = pos[i][j][1],
-                                            estado = 3)
-                bloques.append(bloque)
+    for j in range(len(mapa1[i])):
+        if mapa1[i][j]:
+            bloque = Bloque.constructor(color = getColor("AMARILLO"),
+                                         ancho = ancho_bloque,
+                                         alto = alto_bloque,
+                                         x = pos[i][j][0],
+                                         y = pos[i][j][1],
+                                         estado = 3)
+            bloques.append(bloque)
 
 
 run = True
@@ -107,7 +107,6 @@ while run:
     for eventos in pygame.event.get():
         if eventos.type == pygame.QUIT:
             run = False
-            pygame.quit()
 
     # Dibujamos el fondo
     VENTANA.fill(getColor("NEGRO"))
@@ -132,12 +131,12 @@ while run:
     bordes_objetos = list()
     for bloque in bloques:
         bloque_objeto = pygame.draw.rect(
-                VENTANA,
-                Bloque.getColor(bloque),
-                (Bloque.getX(bloque),
-                Bloque.getY(bloque),
-                Bloque.getAncho(bloque),
-                Bloque.getAlto(bloque)))
+                            VENTANA,
+                            Bloque.getColor(bloque),
+                            (Bloque.getX(bloque),
+                            Bloque.getY(bloque),
+                            Bloque.getAncho(bloque),
+                            Bloque.getAlto(bloque)))
 
         bloques_objetos.append(bloque_objeto)
 
@@ -150,9 +149,8 @@ while run:
                 Bloque.getAncho(bloque),
                 Bloque.getAlto(bloque)))
 
-        borde_objetos.append(borde_objeto)
+        bordes_objetos.append(borde_objeto)
 
-        colisiones(pelota_objeto, pelota, bloques_objetos, pos, 40, 20)
 
 
 
@@ -167,8 +165,9 @@ while run:
     movimientoPlataforma(boton)
 
 
-    # Calculamos colisiones de los bloques ()
-    colisiones(pelota_objeto, pelota, bloques_objetos, pos, 40, 20)
+    # Calculamos colisiones de los bloques
+    colisiones(pelota_objeto, pelota, bloques_objetos, pos, ancho_bloque, alto_bloque)
 
     # Refrescamos la pantalla
     pygame.display.update()
+pygame.quit()
