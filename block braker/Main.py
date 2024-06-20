@@ -7,7 +7,7 @@ import random
 import pygame
 import math
 from colores import *
-from Mapas_utils import pos
+from Mapas_utils import *
 from Mapas import mapa1
 pygame.init()
 
@@ -48,14 +48,13 @@ def mostrarMensaje(mensaje):
 def colisiones(pelota_objeto, pelota, bloques_objetos, pos, ancho_bloque, alto_bloque):
     for i in range(len(pos)):
         for j in range(len(pos[i])):
-            horizontal = [pos[i][0][0], pos[i][0][0]+ancho_bloque]
-            vertical = [pos[i][0][1], pos[i][0][1]+alto_bloque]
+            horizontal = [pos[i][j][0], pos[i][j][0]+ancho_bloque]
+            vertical = [pos[i][j][1], pos[i][j][1]+alto_bloque]
 
-
-        for x in range(horizontal[0], horizontal[1]):
-            for y in range(horizontal[0], horizontal[1]):
-                if pelota_objeto.collidepoint(x, y):
-                    Pelota.setVelocidad(pelota, 0)
+            for x in range(horizontal[0], horizontal[1]):
+                for y in range(horizontal[0], horizontal[1]):
+                    if pelota_objeto.collidepoint(x, y):
+                        Pelota.setVelocidad(pelota, 0)
 
 
 
@@ -68,13 +67,27 @@ plataforma = Plataforma.constructor(color=getColor("AZUL"),
 pelota = Pelota.constructor(color=getColor("SALMON"),
                             x=ANCHO//2,
                             y=500,
-                            velocidad=2.5,
+                            velocidad=25,
                             radio=20)
 
 
+pos = generar_pos(ancho_bloque = 40,
+                  ancho_pantalla = 800,
+                  alto_bloque = 20,
+                  num_filas = 10)
 
+mapa = generar_map(ancho_bloque = 40,
+                   ancho_pantalla = 800,
+                   alto_bloque = 20,
+                   num_filas = 10)
+
+ancho_bloque = 40
+alto_bloque = 20
+num_filas = 10
 
 bloques = list()
+bloques_objetos = list()
+borde_objetos = list()
 for i in range(len(mapa1)):
         for j in range(len(mapa1[i])):
             if mapa1[i][j]:
@@ -89,28 +102,46 @@ for i in range(len(mapa1)):
 
 run = True
 while run:
+
+    # Bucle de eventos
+    for eventos in pygame.event.get():
+        if eventos.type == pygame.QUIT:
+            run = False
+            pygame.quit()
+
+    # Dibujamos el fondo
     VENTANA.fill(getColor("NEGRO"))
 
-    # Dibujamos todos los objetos
+    # Dibujamos la plataforma
     plataforma_objeto  = pygame.draw.rect(VENTANA,
                         Plataforma.getColor(plataforma),
                         (Plataforma.getX(plataforma),
                         Plataforma.getY(plataforma),
                         Plataforma.getAncho(plataforma),
                         Plataforma.getAlto(plataforma)))
-    pelota_objeto = pygame.draw.circle(VENTANA, (215, 97, 49), (Pelota.getX(pelota), Pelota.getY(pelota)), Pelota.getRadio(pelota))
 
+    # Dibujamos la pelota
+    pelota_objeto = pygame.draw.circle(VENTANA,
+                                      (215, 97, 49),
+                                      (Pelota.getX(pelota),
+                                      Pelota.getY(pelota)),
+                                      Pelota.getRadio(pelota))
+
+    #Dibujamos los bloques
     bloques_objetos = list()
-    boredes_objetos = list()
+    bordes_objetos = list()
     for bloque in bloques:
-        pygame.draw.rect(
+        bloque_objeto = pygame.draw.rect(
                 VENTANA,
                 Bloque.getColor(bloque),
                 (Bloque.getX(bloque),
                 Bloque.getY(bloque),
                 Bloque.getAncho(bloque),
                 Bloque.getAlto(bloque)))
-        pygame.draw.rect(
+
+        bloques_objetos.append(bloque_objeto)
+
+        borde_objeto = pygame.draw.rect(
                 surface = VENTANA,
                 color = getColor("NEGRO"),
                 width = 1,
@@ -119,7 +150,9 @@ while run:
                 Bloque.getAncho(bloque),
                 Bloque.getAlto(bloque)))
 
-        colisiones(centro_bloque=(Bloque.getX(bloque), Bloque.getY(bloque)))
+        borde_objetos.append(borde_objeto)
+
+        colisiones(pelota_objeto, pelota, bloques_objetos, pos, 40, 20)
 
 
 
@@ -134,14 +167,8 @@ while run:
     movimientoPlataforma(boton)
 
 
-    # Calculamos colisiones
-    colisiones(pelota_objeto, pelota, bloques_objetos, pos, ancho_bloque, alto_bloque)
+    # Calculamos colisiones de los bloques ()
+    colisiones(pelota_objeto, pelota, bloques_objetos, pos, 40, 20)
 
     # Refrescamos la pantalla
     pygame.display.update()
-
-    # Bucle final de eventos
-    for eventos in pygame.event.get():
-        if eventos.type == pygame.QUIT:
-            run = False
-            pygame.quit()
