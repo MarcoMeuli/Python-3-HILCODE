@@ -17,7 +17,7 @@ ANCHO, ALTO = 800, 600
 pygame.display.set_caption("Block Breaker")
 VENTANA = pygame.display.set_mode((ANCHO, ALTO))
 
-angulo = -90
+angulo = random.randint(0,180)
 ancho_bloque = 40
 alto_bloque = 20
 num_filas = 10
@@ -48,30 +48,46 @@ def mostrarMensaje(mensaje):
 
 
 
-def colisiones(pelota_objeto, pelota, bloques_objetos, pos, ancho_bloque, alto_bloque):
+def colisionBloques(pelota_objeto, pelota, bloques_objetos, pos, ancho_bloque, alto_bloque):
     for i in range(len(pos)):
         for j in range(len(pos[i])):
             horizontal = [pos[i][j][0], pos[i][j][0]+ancho_bloque]
             vertical = [pos[i][j][1], pos[i][j][1]+alto_bloque]
 
             for x in range(horizontal[0], horizontal[1]):
-                for y in range(horizontal[0], horizontal[1]):
+                for y in range(vertical[0], vertical[1]):
                     if pelota_objeto.collidepoint(x, y):
-                        Pelota.setVelocidad(pelota, 0)
+                        Pelota.setVelocidad(pelota, 0) # Temporal
 
 
+def colisionPlataforma(plataforma_objeto, plataforma, angulo, choque): # Colisiones plataforma
+    if pelota_objeto.colliderect(plataforma_objeto) and choque == False:
+        angulo = -angulo
+        choque = True
+    elif not pelota_objeto.colliderect(plataforma_objeto):
+        choque = False
+
+
+    if Pelota.getX(pelota) <= 0 + Pelota.getRadio(pelota) or Pelota.getX(pelota) >= ANCHO - Pelota.getRadio(pelota):
+        angulo = 180 -angulo
+    if Pelota.getY(pelota) <= 0 + Pelota.getRadio(pelota):
+        angulo = -angulo
+    if Pelota.getY(pelota) >= ALTO - Pelota.getRadio(pelota):
+        Pelota.setVelocidad(pelota, 0)
+
+    return angulo, choque
 
 plataforma = Plataforma.constructor(color=getColor("AZUL"),
                                     ancho=80,
                                     alto=20,
                                     x=400,
                                     y=570,
-                                    velocidad=10)
+                                    velocidad=25)
 pelota = Pelota.constructor(color=getColor("SALMON"),
                             x=ANCHO//2,
                             y=500,
                             velocidad=10,
-                            radio=20)
+                            radio=16)
 
 
 pos = generar_pos(ancho_bloque = ancho_bloque,
@@ -91,7 +107,7 @@ borde_objetos = list()
 for i in range(len(mapa1)):
     for j in range(len(mapa1[i])):
         if mapa1[i][j]:
-            bloque = Bloque.constructor(color = getColor("AMARILLO"),
+            bloque = Bloque.constructor(color = getColor("ROJO"),
                                          ancho = ancho_bloque,
                                          alto = alto_bloque,
                                          x = pos[i][j][0],
@@ -99,7 +115,7 @@ for i in range(len(mapa1)):
                                          estado = 3)
             bloques.append(bloque)
 
-
+choque = False
 run = True
 while run:
 
@@ -165,8 +181,14 @@ while run:
     movimientoPlataforma(boton)
 
 
-    # Calculamos colisiones de los bloques
-    colisiones(pelota_objeto, pelota, bloques_objetos, pos, ancho_bloque, alto_bloque)
+    # Calculamos colisiones de los bloques con la pelota
+    colisionBloques(pelota_objeto, pelota, bloques_objetos, pos, ancho_bloque, alto_bloque)
+
+    # Calculamos colisiones de la plataforma con la pelota
+    angulo, choque = colisionPlataforma(plataforma_objeto, plataforma, angulo, choque)
+
+    # Calculamos colisiones de los muros
+
 
     # Refrescamos la pantalla
     pygame.display.update()
